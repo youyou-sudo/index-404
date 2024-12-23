@@ -5,21 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - Page Not Found</title>
     <style>
+      .hope-anchor {
+        text-decoration: none;
+        color: #1a73e8;
+      }
+      .hope-c-iHuheP {
+        transition: color 0.2s ease;
+      }
+      .hope-c-PJLV-idrWMwW-css:hover {
+        color: #174ea6;
+      }
+      .tips {
+        color: #666;
+        font-style: italic;
+        margin: 10px 0;
+        padding-left: 20px;
+        border-left: 3px solid #ddd;
+      }
+      .green-text {
+        color: green;
+      }
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      li {
+        margin-bottom: 15px;
+      }
       body {
         margin: 0;
         padding: 0;
         background: #fce4ec;
         font-family: "Comic Sans MS", "Microsoft YaHei", "SimHei", "STHeiti",
           cursive;
-        overflow: hidden;
+        overflow: hidden; /* 禁用滚动 */
+        position: fixed; /* 完全禁止滚动 */
+        width: 100%;
+        height: 100%;
       }
 
       .container {
-        position: absolute;
+        position: fixed; /* 改为 fixed 定位 */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
+        width: 100%; /* 确保容器宽度不超出 */
+        max-height: 100vh; /* 限制最大高度 */
+        overflow-y: auto; /* 如果内容过多允许在容器内滚动 */
       }
 
       .anime-girl {
@@ -74,10 +107,11 @@
       }
 
       .sparkles {
-        position: absolute;
+        position: fixed; /* 改为 fixed 定位 */
         width: 100%;
         height: 100%;
         pointer-events: none;
+        overflow: hidden; /* 防止特效导致滚动条 */
       }
 
       .sparkle {
@@ -87,6 +121,22 @@
         background: #ff4081;
         border-radius: 50%;
         opacity: 0;
+        will-change: transform, opacity; /* 提示浏览器动画优化 */
+      }
+
+      /* 添加响应式设计 */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 6em;
+        }
+        .anime-girl {
+          width: 200px;
+          height: 200px;
+        }
+        p {
+          font-size: 1.2em;
+          padding: 0 20px;
+        }
       }
     </style>
   </head>
@@ -110,12 +160,82 @@
         again. For now, let time flow quietly ♪(･ω･)ﾉ<br />
         <small>@2021-2024</small>
       </p>
+      <h3>💲机场推荐</h3>
+      <ul>
+        <li>
+          <a
+            href="https://congyu01.top/auth/register?invite=048e5cbcac"
+            target="_blank"
+            class="hope-anchor hope-c-iHuheP hope-c-PJLV hope-c-PJLV-idrWMwW-css"
+          >
+            从雨VPN：从雨云
+          </a>
+          <div>
+            （柚子厨专属 VPN、中转高速流量、低延迟、GPT & 流媒体全解锁；又有
+            <code>0.01x</code> 低倍率 140 GB 套餐可以放大到 14 TB 使用）
+          </div>
+          <div class="tips">
+            Tips：如果使用
+            <code>0.1</code> 等低倍率节点下载资源，请调整下载线程为
+            <code>1</code> 以获得最佳体验
+          </div>
+        </li>
+        <li>
+          <a
+            href="https://magicm.link/#/register?code=BkbYTFo8"
+            target="_blank"
+            class="hope-anchor hope-c-iHuheP hope-c-PJLV hope-c-PJLV-idrWMwW-css"
+          >
+            魔法喵
+          </a>
+          <div>
+            （价格实惠、最低 9.9￥- 768 GB 流量、中转高速、GPT & 流媒体解锁）
+          </div>
+        </li>
+        <li>
+          <a
+            href="https://www.vmssr.net/#/register?code=P8BHb25l"
+            target="_blank"
+            class="hope-anchor hope-c-iHuheP hope-c-PJLV hope-c-PJLV-idrWMwW-css"
+          >
+            VMSSR
+          </a>
+          <div>
+            （价格实惠、最低 9.9￥- 768 GB 流量、中转高速、GPT & 流媒体解锁）
+          </div>
+        </li>
+      </ul>
+      <div class="green-text">
+        非 Clash 用户购买后
+        <strong>不会用</strong> 请注意看套餐主页（往下滑滑）有
+        <strong>手把手教程</strong>
+      </div>
     </div>
 
     <script>
-      function createSparkle() {
+      // 使用节流函数优化sparkle创建
+      function throttle(func, limit) {
+        let inThrottle;
+        return function () {
+          const args = arguments;
+          const context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => (inThrottle = false), limit);
+          }
+        };
+      }
+
+      // 优化sparkle创建
+      const createSparkle = throttle(() => {
         const sparkle = document.createElement("div");
         sparkle.className = "sparkle";
+
+        // 限制sparkle数量
+        const maxSparkles = 50;
+        const sparkles = document.getElementsByClassName("sparkle");
+        if (sparkles.length > maxSparkles) return;
 
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
@@ -125,38 +245,56 @@
 
         document.getElementById("sparkles").appendChild(sparkle);
 
-        sparkle.style.animation = `
-            sparkle ${Math.random() * 2 + 1}s linear forwards
-        `;
+        sparkle.style.animation = `sparkle ${
+          Math.random() * 2 + 1
+        }s linear forwards`;
 
         sparkle.addEventListener("animationend", () => {
           sparkle.remove();
         });
+      }, 100);
+
+      // 优化动画样式添加
+      if (!document.querySelector("#sparkle-style")) {
+        const style = document.createElement("style");
+        style.id = "sparkle-style";
+        style.textContent = `
+          @keyframes sparkle {
+              0% {
+                transform: scale(0);
+                opacity: 0;
+              }
+              50% {
+                transform: scale(1);
+                opacity: 0.8;
+              }
+              100% {
+                transform: scale(0);
+                opacity: 0;
+              }
+          }
+        `;
+        document.head.appendChild(style);
       }
 
-      setInterval(createSparkle, 200);
+      // 使用 requestAnimationFrame 替代 setInterval
+      function animate() {
+        createSparkle();
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
 
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes sparkle {
-            0% {
-            transform: scale(0);
-            opacity: 0;
-            }
-            50% {
-            transform: scale(1);
-            opacity: 0.8;
-            }
-            100% {
-            transform: scale(0);
-            opacity: 0;
-            }
+      // 添加页面可见性检测
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          cancelAnimationFrame(animate);
+        } else {
+          requestAnimationFrame(animate);
         }
-        `;
-      document.head.appendChild(style);
+      });
 
-      // Remove overflow hidden
-      document.body.style.overflow = "auto";
+      // 移除之前添加的样式覆盖
+      // 删除这行: document.body.style.overflow = "auto";
     </script>
   </body>
 </html>
