@@ -96,13 +96,18 @@
       <div class="anime-girl"></div>
       <h1>404</h1>
       <p>
-        The site is hibernating~ (⊃｡•́‿•̀｡)⊃ <br />
-        See you again when the snowflakes fall ♪(･ω･)ﾉ <br />
+        小站去冬眠啦~ (⊃｡•́‿•̀｡)⊃<br />
+        除却自家所述，皆是他人传言，一切安好如常。<br />
+        待雪花轻轻飘落，万物复苏，彼时再见。<br />
+        此刻，静待时光流转 ♪(･ω･)ﾉ<br />
         <small>@2021-2024</small>
       </p>
       <p>
-        小站去冬眠啦~ (⊃｡•́‿•̀｡)⊃ <br />
-        等到雪花飘落时，我们再相见 ♪(･ω･)ﾉ <br />
+        The little station is waking up from its slumber~ (⊃｡•́‿•̀｡)⊃<br />
+        Except for what we have stated, all else is mere hearsay, everything
+        remains peaceful as usual.<br />
+        When the snowflakes gently fall and everything awakens, we shall meet
+        again. For now, let time flow quietly ♪(･ω･)ﾉ<br />
         <small>@2021-2024</small>
       </p>
     </div>
@@ -121,8 +126,8 @@
         document.getElementById("sparkles").appendChild(sparkle);
 
         sparkle.style.animation = `
-                sparkle ${Math.random() * 2 + 1}s linear forwards
-            `;
+            sparkle ${Math.random() * 2 + 1}s linear forwards
+        `;
 
         sparkle.addEventListener("animationend", () => {
           sparkle.remove();
@@ -133,22 +138,25 @@
 
       const style = document.createElement("style");
       style.textContent = `
-            @keyframes sparkle {
-                0% {
-                    transform: scale(0);
-                    opacity: 0;
-                }
-                50% {
-                    transform: scale(1);
-                    opacity: 0.8;
-                }
-                100% {
-                    transform: scale(0);
-                    opacity: 0;
-                }
+        @keyframes sparkle {
+            0% {
+            transform: scale(0);
+            opacity: 0;
             }
+            50% {
+            transform: scale(1);
+            opacity: 0.8;
+            }
+            100% {
+            transform: scale(0);
+            opacity: 0;
+            }
+        }
         `;
       document.head.appendChild(style);
+
+      // Remove overflow hidden
+      document.body.style.overflow = "auto";
     </script>
   </body>
 </html>
